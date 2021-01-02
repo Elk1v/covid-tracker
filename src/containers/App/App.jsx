@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
 import {
-  Card,
   MenuItem,
-  FormControl,
   Select, CardContent,
 } from '@material-ui/core';
+
 import Map from '../../components/map/Map';
 import Table from '../../Table';
 import { sortData } from '../../utils/util';
 import 'leaflet/dist/leaflet.css';
 import InfoboxContainer from '../Infobox';
 import LinegraphContainer from '../Linegraph';
+
+import {
+  Wrapper, LeftContainer, RightContainer,
+  NewCases, Heading, Header, Stats, StyledFormControl,
+} from './styles';
 
 import { CENTER, MAP_ZOOM } from '../../consts';
 
@@ -139,45 +142,5 @@ const App = () => {
     </Wrapper>
   );
 };
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: space-evenly;
-  padding: 20px;
-  
-  @media (max-width: 990px) {
-    flex-direction: column;
-  }
-`;
 
-const LeftContainer = styled.div`
-  flex: 0.9;
-`;
-
-const RightContainer = styled(Card)`
-`;
-
-const NewCases = styled.h2`
-  margin-top: 20px;
-`;
-
-const Heading = styled.h1`
-  color: #CC1034;
-`;
-
-const Header = styled.header`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-`;
-
-const Stats = styled.section`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  
-`;
-
-const StyledFormControl = styled(FormControl)`
-`;
 export default App;
