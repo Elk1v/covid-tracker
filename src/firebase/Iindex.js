@@ -7,7 +7,7 @@ const firebaseConfig = {
   projectId: 'covid-19-tracker-11ee4',
   storageBucket: 'covid-19-tracker-11ee4.appspot.com',
   messagingSenderId: '63054154288',
-  appId: '1:63054154288:web:21eacc85659a48462fbbf5',
+  appId: '1:63054154288:web:ccb16a0e452558bb2fbbf5',
 };
 
 export const firebaseApp = firebase.initializeApp(firebaseConfig);
