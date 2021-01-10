@@ -39,7 +39,8 @@ export const showDataOnMap = (data, casesType = 'cases') => (
       color={casesTypeColor[casesType].hex}
       fillColor={casesTypeColor[casesType].hex}
       radius={
-          Math.sqrt(country[casesType]) * casesTypeColor[casesType].multiplier
+        // eslint-disable-next-line no-mixed-operators
+          Math.sqrt(country[casesType]) * casesTypeColor[casesType].multiplier / 7
       }
     >
       <Popup>
