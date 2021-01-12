@@ -3,7 +3,8 @@ import {
   MenuItem,
   Select, CardContent,
 } from '@material-ui/core';
-
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchAllInfo, fetchCountriesISO } from '../../Store/features/diseaseSlice';
 import Map from '../../components/map/Map';
 import Table from '../../Table';
 import { sortData } from '../../utils/util';
@@ -19,6 +20,11 @@ import {
 import { CENTER, MAP_ZOOM } from '../../consts';
 
 const App = () => {
+  const dispatch = useDispatch();
+  const allinfo = useSelector((state) => state.disease.WorldWideCases);
+  const ISO2 = useSelector((state) => state.disease.countriesISO2);
+  console.log('[ALL INFO]', allinfo);
+  console.log('[ISO]', ISO2);
   const [countries, setCountries] = useState([]);
   const [country, setCountry] = useState('worldwide');
   const [countryInfo, setCountryInfo] = useState({});
@@ -28,6 +34,14 @@ const App = () => {
     lng: -40.4796,
   });
   const [mapCountries, setMapCountries] = useState([]);
+
+  useEffect(() => {
+    dispatch(fetchAllInfo());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchCountriesISO());
+  }, [dispatch]);
 
   useEffect(() => {
     fetch('https://disease.sh/v3/covid-19/all')
@@ -56,8 +70,12 @@ const App = () => {
     getCountriesData();
   }, []);
 
-  const countryItems = countries.map(({ value, name }) => (
-    <MenuItem key={name} value={value}>{name}</MenuItem>
+  // const countryItems = countries.map(({ value, name }) => (
+  //   <MenuItem key={name} value={value}>{name}</MenuItem>
+  // ));
+
+  const countryItems = ISO2.map(({ name, ISO2 }) => (
+    <MenuItem key={name} value={ISO2}>{name}</MenuItem>
   ));
 
   const countryChangeHandler = async (evt) => {
@@ -110,18 +128,18 @@ const App = () => {
         <Stats>
           <InfoboxContainer
             title="Cases"
-            cases={countryInfo.todayCases}
-            total={countryInfo.cases}
+            cases={allinfo.todayCases}
+            total={allinfo.cases}
           />
           <InfoboxContainer
             title="Recovered"
-            cases={countryInfo.todayRecovered}
-            total={countryInfo.recovered}
+            cases={allinfo.todayRecovered}
+            total={allinfo.recovered}
           />
           <InfoboxContainer
             title="Deaths"
-            cases={countryInfo.todayDeaths}
-            total={countryInfo.deaths}
+            cases={allinfo.todayDeaths}
+            total={allinfo.deaths}
           />
         </Stats>
 
@@ -134,6 +152,7 @@ const App = () => {
       <RightContainer>
         <CardContent>
           <h3>Live Cases By Country</h3>
+          <button type="button" onClick={() => { dispatch(fetchAllInfo()); }}>click</button>
           <Table countries={tableData} />
           <NewCases>Worldwide new cases</NewCases>
           <LinegraphContainer />
